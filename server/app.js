@@ -1,42 +1,32 @@
-var http = require('http');
-var koa = require('koa');
-var serve = require('koa-static');
-var logger = require('koa-logger');
-var app = module.exports = koa();
-var path = require('path');
-var config;
-
-app.server = function (config) {
-    var server, db;
+var app = function (config) {
+    var config, application, router, server, db;
     create();
     return {
+        create : create,
         start: start,
         shutdown : shutdown
     };
 
     //----------------------
     function create() {
-        server = http.createServer(app.callback());
+        application = config.app.create();
+        router = application.router;
+        router
+            .get('/', function *(next) {
+                this.body = 'Hello World!';
+            });
+        server = application.createServer(true);
         db = config.db.create();
-        db.start();
-
-        app.use(logger());
-        app.use(serve(path.join(__dirname, '/public')));
-        app.use(function *() {
-            this.body = "Hello World";
-        });
-    };
+        return this;
+    }
 
     function start() {
-        server.listen(config.port, config.ip, function () {
-            console.log('materialApp started server on ip %s on port %d, in %s mode',
-                config.ip, config.port, config.env);
-        });
+        application.startServer();
+        db.start();
         process
             .on('SIGINT', this.shutdown)
             .on('SIGTERM', this.shutdown);
-
-    };
+    }
 
     function shutdown() {
         db.shutdown(function() {
@@ -44,6 +34,7 @@ app.server = function (config) {
         });
     };
 };
+module.exports = app;
 
 
 

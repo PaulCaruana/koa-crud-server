@@ -42,8 +42,6 @@ var db = function(config) {
     };
 
     function shutdown(callback) {
-        console.log("--")
-        console.log(mongoose.connection)
         mongoose.connection.close(function() {
             console.log('Database connection disconnected through app termination');
             callback()

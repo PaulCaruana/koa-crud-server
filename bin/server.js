@@ -2,6 +2,7 @@
 'use strict';
 
 var config = require('../server/config');
-var app = require('../server/app');
-app.server(config).start();
+var app = require('../server/app')(config).create();
+app.start();
+
 

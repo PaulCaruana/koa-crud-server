@@ -1,38 +1,24 @@
 var app = function (config) {
-    var config, application, router, server, db;
-    create();
-    return {
-        create : create,
-        start: start,
-        shutdown : shutdown
-    };
+    var application, db, startSSL = true;
 
-    //----------------------
-    function create() {
-        application = config.app.create();
-        router = application.router;
-        router
-            .get('/', function *(next) {
-                this.body = 'Hello World!';
-            });
-        server = application.createServer(true);
-        db = config.db.create();
-        return this;
-    }
+    function startServer() {
+        application = config.app.create().startServer(startSSL);
+        application.db = config.db.create().start();
+        config.wiring.create(application);
 
-    function start() {
-        application.startServer();
-        db.start();
         process
-            .on('SIGINT', this.shutdown)
-            .on('SIGTERM', this.shutdown);
+            .on('SIGINT', serverShutdown)
+            .on('SIGTERM', serverShutdown);
     }
 
-    function shutdown() {
-        db.shutdown(function() {
+    function serverShutdown() {
+        application.db.shutdown(function() {
             process.exit(0);
         });
     };
+    return {
+        startServer : startServer
+    }
 };
 module.exports = app;
 

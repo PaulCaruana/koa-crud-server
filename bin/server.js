@@ -2,7 +2,7 @@
 'use strict';
 
 var config = require('../server/config');
-var app = require('../server/app')(config).create();
-app.start();
+var app = require('../server/app')(config);
+app.startServer();
 
 

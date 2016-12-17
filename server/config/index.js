@@ -12,16 +12,17 @@ var common = {
     app : {
         root: path.normalize(__dirname + '/../..'),
         publicDir: '/public',
-        // List of user roles
         userRoles: ['user', 'admin', 'root'],
         ip: '0.0.0.0',
         env: process.env.NODE_ENV || 'dev',
         port: process.env.PORT || 9000,
         sslPort: process.env.PORT || 9443,
-        create: function() {
+        create: function(db) {
             var koa = require('./koa');
             var app = koa(this);
-            return app.create();
+            app.root = this.root;
+            app.env = this.env;
+            return app.create(db);
         }
     },
     db : {
@@ -48,7 +49,17 @@ var common = {
                 }
             }
         }
+    },
+    wiring : {
+        create: function(application) {
+            var wiring = require('./wiring');
+            return wiring(this, application);
+        },
+        autowire : {
+            services : "services"
+        }
     }
 };
 var env = require('./env/' + common.app.env + '.js') || {};
-module.exports =  _.merge(common, env);
+var self =  _.merge(common, env);
+module.exports = self;

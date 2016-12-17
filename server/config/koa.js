@@ -16,12 +16,12 @@ var serve = require('koa-static');
 
 
 var application = function (config) {
-    var httpServer, httpsServer;
-    create();
     return {
         create : create,
-        createServer : createServer,
         startServer : startServer,
+        httpServer: null,
+        httpsServer: null,
+        serverShutdown: serverShutdown,
         router : router
     };
 //---------------------------------
@@ -41,29 +41,29 @@ var application = function (config) {
         return this;
     }
 
-    function createServer(ssl) {
-        httpServer = http.createServer(app.callback());
+    function startServer(ssl) {
+        this.httpServer = http.createServer(app.callback());
         if (ssl) {
             var options = {
                 key: fs.readFileSync(__dirname + '/auth/key.pem'),
                 cert: fs.readFileSync(__dirname + '/auth/cert.pem')
             };
-            httpsServer = https.createServer(options, app.callback());
+            this.httpsServer = https.createServer(options, app.callback());
         }
-     }
 
-    function startServer() {
-        httpServer.listen(config.port, config.ip, function () {
+        this.httpServer.listen(config.port, config.ip, function () {
             console.log('Http server on ip %s on port %d, in %s mode',
                 config.ip, config.port, config.env);
         });
-        if (httpsServer){
-            httpsServer.listen(config.sslPort, config.ip, function () {
+        if (this.httpsServer){
+            this.httpsServer.listen(config.sslPort, config.ip, function () {
                 console.log('Https server on ip %s on port %d, in %s mode',
                     config.ip, config.sslPort, config.env);
             });
         }
-
+        return this;
     }
+
+    function serverShutdown(){}
 };
 exports = module.exports = application;

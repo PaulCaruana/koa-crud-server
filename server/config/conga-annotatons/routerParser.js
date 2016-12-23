@@ -47,3 +47,7 @@ methodAnnotations.forEach(function(annotation){
     }
 
 });
+
+var RouterParser = function(module) {
+
+};

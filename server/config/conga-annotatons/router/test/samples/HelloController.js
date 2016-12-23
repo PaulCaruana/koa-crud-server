@@ -1,7 +1,7 @@
 // src/my-bundle/lib/controller/default.js
 
 /**
- * @router
+ * @router(options={methods:['GET', 'POST', 'PUT', 'DELETE']})
  */
 function HelloController(){};
 

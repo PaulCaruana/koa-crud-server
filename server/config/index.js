@@ -2,15 +2,18 @@
 
 var _ = require('lodash');
 var path = require('path');
+var root = path.normalize(__dirname + '/../../');
 
 /**
  * Load environment configuration
  */
 var common = {
-    shared : {
-    },
+    root: root,
+    publicDir: '/public',
+    userRoles: ['user', 'admin', 'root'],
+    env: process.env.NODE_ENV || 'dev',
     app : {
-        root: path.normalize(__dirname + '/../..'),
+        root: root,
         publicDir: '/public',
         userRoles: ['user', 'admin', 'root'],
         ip: '0.0.0.0',
@@ -53,13 +56,17 @@ var common = {
     wiring : {
         create: function(application) {
             var wiring = require('./wiring');
-            return wiring(this, application);
+            return wiring(config, this, application);
         },
         autowire : {
-            services : "services"
+            libs : ["server/services/**/*.js"]
+        },
+        router : {
+            loader : require(path.normalize(__dirname + "/congaAnnotations/router/RouterParser")),
+            libs : ["server/services/**/*.js"]
         }
     }
 };
 var env = require('./env/' + common.app.env + '.js') || {};
-var self =  _.merge(common, env);
-module.exports = self;
+var config =  _.merge(common, env);
+module.exports = config;

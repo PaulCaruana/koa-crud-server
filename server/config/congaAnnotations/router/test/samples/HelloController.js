@@ -11,11 +11,13 @@ HelloController.prototype = {
      * @route
      */
     hello: function*(next){
+        this.body = 'Hello World!...';
     },
     /**
      * @route('users/:userId')
      */
-    get: function(next){
+    get: function*(next){
+        this.body = 'Hello ' + this.params.id;
     }
 
 };

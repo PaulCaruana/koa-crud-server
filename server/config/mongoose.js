@@ -6,7 +6,7 @@
 'use strict';
 var mongoose = require('mongoose');
 
-var db = function(config) {
+var db = function(mongo) {
     var connection
     return {
         connection : connection,
@@ -17,7 +17,7 @@ var db = function(config) {
     //----------------------
     var connection;
     function start() {
-        connection = mongoose.connect(config.mongo.uri, config.mongo.options);
+        connection = mongoose.connect(mongo.uri, mongo.options);
         if (connection.state === 0 || connection.state === 3) {
             connection.open(function connectionReconnect(err) {
                 if (err) {
@@ -35,6 +35,7 @@ var db = function(config) {
         mongoose.connection.once('open', function connectionOpen() {
             console.log('Database connection started');
         });
+        return this;
     };
 
     function error(msg, err) {

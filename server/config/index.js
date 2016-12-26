@@ -9,29 +9,27 @@ var root = path.normalize(__dirname + '/../../');
  */
 var common = {
     root: root,
-    publicDir: '/public',
     userRoles: ['user', 'admin', 'root'],
     env: process.env.NODE_ENV || 'dev',
     app : {
-        root: root,
-        publicDir: '/public',
-        userRoles: ['user', 'admin', 'root'],
-        ip: '0.0.0.0',
-        env: process.env.NODE_ENV || 'dev',
-        port: process.env.PORT || 9000,
-        sslPort: process.env.PORT || 9443,
         create: function(db) {
             var koa = require('./koa');
-            var app = koa(this);
-            app.root = this.root;
-            app.env = this.env;
+            this.server.env = config.env;
+            this.server.root = config.root;
+            var app = koa(this.server);
             return app.create(db);
+        },
+        server: {
+            publicDir: '/public',
+            ip: '0.0.0.0',
+            port: process.env.PORT || 9000,
+            sslPort: process.env.PORT || 9443
         }
     },
     db : {
         create: function() {
             var orm = require('./mongoose');
-            return orm(this);
+            return orm(this.mongo);
         },
         mongo: {
             options: {
@@ -60,13 +58,19 @@ var common = {
         },
         autowire : {
             libs : ["server/services/**/*.js"]
+        }
+    },
+    routing : {
+        create: function(application) {
+            var routing = require('./routing');
+            return routing(this.annotation, application);
         },
-        router : {
-            loader : require(path.normalize(__dirname + "/congaAnnotations/router/RouterParser")),
-            libs : ["server/services/**/*.js"]
+        annotation : {
+            parser : require(path.normalize(__dirname + "/congaAnnotations/router/RouterParser")),
+            scan : ["server/services/**/*.js"]
         }
     }
 };
-var env = require('./env/' + common.app.env + '.js') || {};
+var env = require('./env/' + common.env + '.js') || {};
 var config =  _.merge(common, env);
 module.exports = config;

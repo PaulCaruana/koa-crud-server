@@ -10,15 +10,17 @@ UserController.prototype = {
      * @route('/user/:id')
      */
     user: function*(next){
-        this.body = 'Hello pc';
+        yield next;
+        this.body = 'Hello ' + this.params.id;
     },
 
     /**
      * @route
      */
     hello: function*(next){
+        yield next;
         this.body = 'Hello World!...';
-    },
+    }
 
 };
 

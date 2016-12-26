@@ -4,7 +4,9 @@ var app = function (config) {
     function startServer() {
         application = config.app.create().startServer(startSSL);
         application.db = config.db.create().start();
-        config.wiring.create(application);
+        application.root = config.root;
+        application.env = config.env;
+        config.routing.create(application);
 
         process
             .on('SIGINT', serverShutdown)

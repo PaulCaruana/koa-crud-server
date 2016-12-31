@@ -6,7 +6,7 @@ var app = function (config) {
         application.db = config.db.create().start();
         application.root = config.root;
         application.env = config.env;
-        config.routing.create(application);
+        config.routing.build(application);
 
         process
             .on('SIGINT', serverShutdown)

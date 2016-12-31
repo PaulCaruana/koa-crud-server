@@ -8,7 +8,7 @@ module.exports = Annotation.extend({
 
      * @type {String}
      */
-    annotation: 'Route',
+    annotation: 'Inject',
 
     /**
      * The possible targets
@@ -17,7 +17,9 @@ module.exports = Annotation.extend({
      *
      * @type {Array}
      */
-    targets: [Annotation.METHOD],
+    targets: [Annotation.CONSTRUCTOR, Annotation.METHOD, Annotation.PROPERTY],
+
+    type: "Inject",
 
     /**
      * Optional initialization method that
@@ -27,8 +29,8 @@ module.exports = Annotation.extend({
      * @return {void}
      */
     init: function(data){
-        this.value = (typeof data.value !== 'undefined') ? data.value : '/';
-        this.method = (typeof data.method !== 'undefined')? data.method.toUpperCase() : 'GET';
+        this.params = data
+        this.type = "Inject"
     }
 
 });

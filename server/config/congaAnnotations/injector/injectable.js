@@ -1,5 +1,6 @@
-
 var Annotation = require('conga-annotations').Annotation;
+
+var annotation = {};
 
 module.exports = Annotation.extend({
 
@@ -8,7 +9,7 @@ module.exports = Annotation.extend({
 
      * @type {String}
      */
-    annotation: 'Route',
+    annotation: 'Injectable',
 
     /**
      * The possible targets
@@ -17,7 +18,7 @@ module.exports = Annotation.extend({
      *
      * @type {Array}
      */
-    targets: [Annotation.METHOD],
+    targets: [Annotation.CONSTRUCTOR],
 
     /**
      * Optional initialization method that
@@ -27,8 +28,7 @@ module.exports = Annotation.extend({
      * @return {void}
      */
     init: function(data){
-        this.value = (typeof data.value !== 'undefined') ? data.value : '/';
-        this.method = (typeof data.method !== 'undefined')? data.method.toUpperCase() : 'GET';
+        this.type = "Injectable"
     }
 
 });

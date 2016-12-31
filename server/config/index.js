@@ -2,7 +2,7 @@
 
 var _ = require('lodash');
 var path = require('path');
-var root = path.normalize(__dirname + '/../../');
+var root = path.normalize(__dirname + '/../');
 
 /**
  * Load environment configuration
@@ -61,14 +61,16 @@ var common = {
         }
     },
     routing : {
-        create: function(application) {
+        build: function(application) {
             var routing = require('./routing');
-            return routing(this.annotation, application);
+            return routing(this.config, application.router);
         },
-        annotation : {
-            parser : require(path.normalize(__dirname + "/congaAnnotations/router/RouterParser")),
-            scan : ["server/services/**/*.js"]
-        }
+        get config() {
+            var RouterParser = new require(path.normalize(__dirname + "/congaAnnotations/router/RouterParser"));
+            var routerParser = new RouterParser();
+            return routerParser.parseComponents(root, this.scan);
+        },
+        scan : ["services/**/*.js"]
     }
 };
 var env = require('./env/' + common.env + '.js') || {};

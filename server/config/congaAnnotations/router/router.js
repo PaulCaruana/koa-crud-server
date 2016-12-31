@@ -1,6 +1,6 @@
 var Annotation = require('conga-annotations').Annotation;
 
-var annotation = {}
+var annotation = {};
 
 module.exports = Annotation.extend({
 
@@ -9,7 +9,7 @@ module.exports = Annotation.extend({
 
      * @type {String}
      */
-    annotation: 'router',
+    annotation: 'Router',
 
     /**
      * The possible targets
@@ -28,8 +28,10 @@ module.exports = Annotation.extend({
      * @return {void}
      */
     init: function(data){
-        this.options = (typeof data.value !== 'undefined') ? data.value : {};
-        this.options.methods = (typeof data.options.methods !== 'undefined')? data.options.methods : ['GET', 'POST', 'PUT', 'DELETE'];
+        this.nested = data.nested || [];
+        this.nested = (typeof this.nested === 'string')? [this.nested] : this.nested;
+        this.options = (typeof data.options !== 'undefined') ? data.options : {};
+        this.options.methods = (typeof this.options.methods !== 'undefined')? this.options.methods : ['GET', 'POST', 'PUT', 'DELETE'];
     }
 
 });

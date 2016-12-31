@@ -1,20 +1,20 @@
 // src/my-bundle/lib/controller/default.js
 
 /**
- * @router(options={methods:['GET', 'POST', 'PUT', 'DELETE']})
+ * @Router("User", prefix="/users", nested="CrudController")
  */
-function HelloController(){};
+function UserController(){};
 
-HelloController.prototype = {
+UserController.prototype = {
 
     /**
-     * @route
+     * @Route
      */
     hello: function*(next){
         this.body = 'Hello World!...';
     },
     /**
-     * @route('users/:userId')
+     * @Route('/:userId')
      */
     get: function*(next){
         this.body = 'Hello ' + this.params.id;
@@ -22,4 +22,4 @@ HelloController.prototype = {
 
 };
 
-module.exports = HelloController;
+module.exports = UserController;

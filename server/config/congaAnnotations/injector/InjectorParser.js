@@ -54,9 +54,11 @@ InjectorParser.prototype = {
         injectableAnnotations.forEach(function (injectableAnnotation) {
             injectable = injectable || {};
             injectable.filePath = injectableAnnotation.filePath;
-            injectable.id = injectableAnnotation.target;
+            injectable.target = injectableAnnotation.target;
             if (injectableAnnotation.type === "Injectable") {
                 injectable.injectable = true;
+                injectable.id = injectableAnnotation.id || injectableAnnotation.target;
+                injectable.singleton = injectableAnnotation.singleton;
             } else {
                 injectable.params = injectableAnnotation.params;
             }

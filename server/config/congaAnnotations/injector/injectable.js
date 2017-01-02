@@ -28,7 +28,9 @@ module.exports = Annotation.extend({
      * @return {void}
      */
     init: function(data){
-        this.type = "Injectable"
+        this.type = "Injectable";
+        this.id = (typeof data.value !== 'undefined') ? data.value : data.target;
+        this.singleton = (typeof data.singleton !== 'undefined') ? data.singleton : true;
     }
 
 });

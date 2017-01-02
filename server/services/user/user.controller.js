@@ -1,11 +1,10 @@
-// src/my-bundle/lib/controller/default.js
-
 /**
- * @Injectable()
+ * @Injectable
+ * @Inject(model="user.model")
  * @Router(options={methods:['GET', 'POST', 'PUT', 'DELETE']})
  */
-function UserController(db){};
-
+function UserController(model){;
+}
 UserController.prototype = {
     /**
      * @Route('/user/:id')
@@ -21,7 +20,13 @@ UserController.prototype = {
     hello: function*(next){
         yield next;
         this.body = 'Hello World!...';
+    },
+
+/*
+    sayHello: function() {
+        return model;
     }
+*/
 
 };
 

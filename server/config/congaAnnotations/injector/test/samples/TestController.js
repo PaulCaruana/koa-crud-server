@@ -1,6 +1,8 @@
+exports = module.exports = TestController;
+
 /**
  * @Injectable
- * @Inject(model="model.test")
+ * @Inject(model="user.model")
  */
 function TestController(model){};
 
@@ -8,4 +10,3 @@ TestController.prototype = {
 
 };
 
-module.exports = TestController;

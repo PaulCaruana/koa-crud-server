@@ -27,6 +27,7 @@
     "mongoose": "^4.7.0",
     "raw-body": "^1.2.1",
     "save-to": "^1.0.3",
+    "service-locator": "^1.0.0",
     "streaming-json-stringify": "^1.0.0",
     "swig": "^1.4.2"
   },

@@ -52,13 +52,17 @@ var common = {
         }
     },
     wiring : {
-        create: function(application) {
+        build: function(application) {
             var wiring = require('./wiring');
-            return wiring(config, this, application);
+            console.log(this.config)
+           // return wiring(this.config, application);
         },
-        autowire : {
-            libs : ["server/services/**/*.js"]
-        }
+        get config() {
+            var InjectorParser = new require(path.normalize(__dirname + "/congaAnnotations/injector/InjectorParser"));
+            var injectorParser = new InjectorParser();
+            return injectorParser.parseComponents(root, this.scan);
+        },
+        scan : ["services/**/*.js"]
     },
     routing : {
         build: function(application) {

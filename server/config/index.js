@@ -53,9 +53,9 @@ var common = {
     },
     wiring : {
         build: function(application) {
-            var wiring = require('./wiring');
-            console.log(this.config)
-           // return wiring(this.config, application);
+            var locatorFactory = require('./locatorFactory');
+            //console.log(this.config)
+            return locatorFactory(this.config, application);
         },
         get config() {
             var InjectorParser = new require(path.normalize(__dirname + "/congaAnnotations/injector/InjectorParser"));
@@ -67,7 +67,7 @@ var common = {
     routing : {
         build: function(application) {
             var routing = require('./routing');
-            return routing(this.config, application.router);
+            return routing(this.config, application);
         },
         get config() {
             var RouterParser = new require(path.normalize(__dirname + "/congaAnnotations/router/RouterParser"));

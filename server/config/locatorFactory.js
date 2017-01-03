@@ -1,20 +1,24 @@
 'use strict';
 
-var wiring = function (injectables, application) {
+exports = module.exports = function (injectables, application) {
     Function.prototype.construct = function (aArgs) {
         var oNew = Object.create(this.prototype);
         this.apply(oNew, aArgs);
         return oNew;
     };
 
-    var locator = application.locator;
-    for (var id in injectables) {
-        getObject(id);
-    }
+    var locator = {
+        store : {},
+        register : function(id, obj) {
+            this.store[id] = obj;
+        },
+        get : getObject
+    };
+    return locator;
 
     function getObject(id, callChain) {
         // Check if object exists in service locator
-        var obj = locator[id];
+        var obj = this.store[id];
         if (obj) {
             return obj;
         }
@@ -36,7 +40,7 @@ var wiring = function (injectables, application) {
         var fnObj = require(injectable.filePath);
         if (typeof fnObj != "function") {
             var obj = fnObj;
-            locator.register(id, obj);
+            this.register(id, obj);
             return obj;
         };
 
@@ -45,9 +49,10 @@ var wiring = function (injectables, application) {
         var fnParamNames =  getParamNames(fn);
         var params = injectable.params || [];
         var fnParamValues = [];
+        var self = this;
         fnParamNames.forEach(function(fnParamName) {
             var paramId = params[fnParamName];
-            var fnParamValue = (paramId)? getObject(paramId, callChain) : null;
+            var fnParamValue = (paramId)? self.get(paramId, callChain) : null;
             fnParamValues.push(fnParamValue)
         });
 
@@ -57,8 +62,9 @@ var wiring = function (injectables, application) {
             obj = fn.construct(fnParamValues);
         }
         if (injectable.singleton === true) {
-            locator.register(id, obj);
+            this.register(id, obj);
         }
+        return obj;
     };
 
     function getParamNames(func) {
@@ -70,7 +76,4 @@ var wiring = function (injectables, application) {
             result = [];
         return result;
     }
-
-
 };
-exports = module.exports = wiring;

@@ -1,4 +1,4 @@
-var locator = require('servicelocator');
+var locator = require('service-locator')();
 var app = function (config) {
     var application, db, startSSL = true;
 
@@ -7,9 +7,7 @@ var app = function (config) {
         application.db = config.db.create().start();
         application.root = config.root;
         application.env = config.env;
-        application.locator = locator;
-
-        config.wiring.build(application);
+        application.locator = config.wiring.build(application);
         config.routing.build(application);
 
         process

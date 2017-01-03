@@ -1,33 +1,29 @@
 /**
  * @Injectable
  * @Inject(model="user.model")
- * @Router(options={methods:['GET', 'POST', 'PUT', 'DELETE']})
+ * @Router(prefix="/users")
  */
-function UserController(model){;
-}
-UserController.prototype = {
-    /**
-     * @Route('/user/:id')
-     */
-    user: function*(next){
-        yield next;
-        this.body = 'Hello ' + this.params.id;
-    },
+exports = module.exports = (function UserController() {
+    var Class = function(model) {
+        this._model = model;
+    };
 
-    /**
-     * @Route
-     */
-    hello: function*(next){
-        yield next;
-        this.body = 'Hello World!...';
-    },
+    Class.prototype = {
+        /**
+         * @Route('/:id')
+         */
+        user: function*(next){
+            yield next;
+            this.body = 'Hello ' + this.params.id;
+        },
 
-/*
-    sayHello: function() {
-        return model;
-    }
-*/
-
-};
-
-module.exports = UserController;
+        /**
+         * @Route
+         */
+        hello: function*(next){
+            yield next;
+            this.body = 'Hello World!...';
+        }
+    };
+    return Class;
+})();

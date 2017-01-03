@@ -1,7 +1,7 @@
 var path = require('path');
 var annotations = require('conga-annotations');
 var fs = require('fs');
-var GeneratorReader = require('../GeneratorReader');
+var ExtendedReader = require('../ExtendedReader');
 
 // create the registry
 var registry = new annotations.Registry();
@@ -42,7 +42,7 @@ InjectorParser.prototype = {
     },
 
     _parseComponent: function(root, file) {
-        var reader = new GeneratorReader(registry);
+        var reader = new ExtendedReader(registry);
         var filePath = path.join(root, file);
         reader.parse(filePath);
         return reader;

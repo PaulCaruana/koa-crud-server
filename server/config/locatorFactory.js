@@ -8,13 +8,35 @@ exports = module.exports = function (injectables, application) {
     };
 
     var locator = {
-        store : {},
-        register : function(id, obj) {
+        store: {},
+        register: function (id, obj) {
             this.store[id] = obj;
         },
-        get : getObject
+        get: getObjectProperty,
+        getObject : getObject
     };
     return locator;
+
+    function getObjectProperty(idProp) {
+        if (idProp) {
+            var ID_PROP = /(.*)\[[\'|\"](.*)[\'|\"]\]/;
+            var match = idProp.match(ID_PROP);
+            if (match) {
+                var id = match[1];
+                var prop = match[2];
+                var obj = this.getObject(id);
+
+                if (obj) {
+                    return obj[prop];
+                }
+            } else {
+                var id = idProp
+                return this.getObject(id);
+            }
+        } else {
+            return null;
+        }
+    }
 
     function getObject(id, callChain) {
         // Check if object exists in service locator
@@ -42,17 +64,18 @@ exports = module.exports = function (injectables, application) {
             var obj = fnObj;
             this.register(id, obj);
             return obj;
-        };
+        }
+        ;
 
         // Load params
         var fn = fnObj;
-        var fnParamNames =  getParamNames(fn);
+        var fnParamNames = getParamNames(fn);
         var params = injectable.params || [];
         var fnParamValues = [];
         var self = this;
-        fnParamNames.forEach(function(fnParamName) {
+        fnParamNames.forEach(function (fnParamName) {
             var paramId = params[fnParamName];
-            var fnParamValue = (paramId)? self.get(paramId, callChain) : null;
+            var fnParamValue = (paramId) ? self.get(paramId, callChain) : null;
             fnParamValues.push(fnParamValue)
         });
 
@@ -71,8 +94,8 @@ exports = module.exports = function (injectables, application) {
         var STRIP_COMMENTS = /((\/\/.*$)|(\/\*[\s\S]*?\*\/))/mg;
         var ARGUMENT_NAMES = /([^\s,]+)/g;
         var fnStr = func.toString().replace(STRIP_COMMENTS, '');
-        var result = fnStr.slice(fnStr.indexOf('(')+1, fnStr.indexOf(')')).match(ARGUMENT_NAMES);
-        if(result === null)
+        var result = fnStr.slice(fnStr.indexOf('(') + 1, fnStr.indexOf(')')).match(ARGUMENT_NAMES);
+        if (result === null)
             result = [];
         return result;
     }

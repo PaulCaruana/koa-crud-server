@@ -1,18 +1,18 @@
 /**
  * @Injectable
- * @Inject(model="user.model")
+ * @Inject(model="userModel['model']")
  * @Router(prefix="/users")
  */
 exports = module.exports = (function UserController() {
     var Class = function (model) {
        // console.log("here2")
-      //  console.log(model.model)
+       //console.log(model)
         this._model = model;
     };
 
     var dao = {};
     dao.user = function (self, next) {
-        console.log(next)
+       // console.log(next)
         self.body = 'Hello ' + self.params.id;
 
     }

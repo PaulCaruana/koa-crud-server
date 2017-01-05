@@ -12,10 +12,10 @@ exports = module.exports = function (routers, application) {
             var method = route.method.toLowerCase();
             var property = route.target;
             var matcher = prefix + route.matcher;
-            /*
-             console.log(matcher)
-             console.log(property)
-             */
+
+            // console.log(matcher)
+           //  console.log(property)
+
             appRouter[method](matcher, module[property]);
         });
     });
@@ -31,17 +31,19 @@ exports = module.exports = function (routers, application) {
      this.body = 'Hello World!.';
      });
      */
-/*
+
 
         function *nest(next){
-                next = fn1.call(this, next);
-             next = fn2.call(this, next);
+
+            yield fn1.call(this, next);
+             //next = fn2.call(this, next);
 
 
-            console.log('a')
-            var x = yield *next;
-            console.log('b')
-            // return x
+           // console.log('a')
+   //         var x = yield *next;
+            //console.log('b')
+   //          return x
+
         }
 
     var fn1 = function *(next) {
@@ -58,5 +60,5 @@ exports = module.exports = function (routers, application) {
         this.body = this.body + 'Hello2';
     };
     appRouter.get("/", nest)
-*/
+
 };

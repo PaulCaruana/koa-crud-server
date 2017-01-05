@@ -1,5 +1,5 @@
 /**
- * @Injectable("user.model")
+ * @Injectable("userModel")
  */
 exports = module.exports = (function UserModel() {
     var mongoose = require('mongoose');

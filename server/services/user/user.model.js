@@ -3,6 +3,7 @@
  */
 exports = module.exports = (function UserModel() {
     var mongoose = require('mongoose');
+    var genericDao = require("./generic.dao");
     var Schema = mongoose.Schema;
     var id = "User";
     var definition = {
@@ -19,7 +20,11 @@ exports = module.exports = (function UserModel() {
     return {
         definition: definition,
         schema : schema,
-        model : mongoose.model(id, schema)
+        model : mongoose.model(id, schema),
+        get dao() {
+            var dao = genericDao(this.model);
+            return dao;
+        }
     };
 
     //------------------------------------------------------------

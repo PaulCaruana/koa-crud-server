@@ -29,6 +29,7 @@ describe('RouterParser', function() {
         expect(router.nested).to.eql([ 'CrudController' ]);
         expect(router.routes.hello).to.eql({ matcher: '/', method: 'GET', target: 'hello' });
         expect(router.routes.get).to.eql({ matcher: '/:userId', method: 'GET', target: 'get' });
+        expect(router.routes.helloWorld).to.eql({ matcher: '/world', method: 'GET', target: 'helloWorld' });
         done();
     });
 

@@ -45,10 +45,13 @@ inherits(Cat, Animal);
  console.log(garfield.hasBeenWalked())
  */
 var MyClass = (function () {
-    var privateVar = "something"; // this will be visible by the functions
-                                  // below but not outside
+    var MyClass = function (something) {
+        this.something = something;
+        console.log(this.something)
+    }
 
-    var obj = {
+
+    MyClass.prototype = {
         myMethod: function (arg) {
             this.arg = arg;
             console.log(this.something + arg)
@@ -56,20 +59,15 @@ var MyClass = (function () {
         }
     }
 
-    function MyClass(something) {
-        var self = {
-            something : something
-        }
-        this.something = self.something;
-    }
-
-
-    MyClass.prototype = obj;
-
     // You were missing this
     return MyClass;
 })();
 
-var myClass = new MyClass("con")
+function createInstanceWithArguments (fConstructor, aArgs) {
+    var obj = Object.create(fConstructor.prototype);
+    fConstructor.apply(obj, aArgs);
+    return obj;
+}
+var myClass = createInstanceWithArguments (MyClass, ["con"])
 myClass.myMethod("prop");
 //console.log(myClass.fred)

@@ -6,11 +6,12 @@ Parser.prototype.T_CONSTRUCTOR_FUNCTION_VARIABLE = /var (.*) = [\(]function\((.*
 
 function ExtendedReader(registry) {
     var reader = new annotations.Reader(registry);
+    var self = this;
     this.parse = function(path) {
         reader.parse(path);
+        self.getConstructorAnnotations = reader.getConstructorAnnotations;
+        self.getMethodAnnotations = reader.getMethodAnnotations;
+        self.getPropertyAnnotations = reader.getPropertyAnnotations;
     };
-    this.getConstructorAnnotations = reader.getConstructorAnnotations;
-    this.getMethodAnnotations = reader.getMethodAnnotations;
-    this.getPropertyAnnotations = reader.getPropertyAnnotations;
  }
 module.exports = ExtendedReader;

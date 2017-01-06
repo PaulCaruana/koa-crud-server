@@ -41,6 +41,7 @@ var db = function(mongo) {
             }
 */
         });
+        mongoose.Promise = require('bluebird');
         return this;
     };
 

@@ -71,14 +71,14 @@ RouteParser.prototype = {
                 routes: {}
             };
         });
-        var methodAnnotations = reader.getMethodAnnotations();
-        methodAnnotations.forEach(function (methodAnnotation) {
+        var annotations = reader.getMethodAnnotations().concat(reader.getPropertyAnnotations());
+        annotations.forEach(function (annotation) {
             var route = {
-                matcher: methodAnnotation.value,
-                method: methodAnnotation.method,
-                target: methodAnnotation.target
+                matcher: annotation.value,
+                method: annotation.method,
+                target: annotation.target
             };
-            router.filePath = methodAnnotation.filePath;
+            router.filePath = annotation.filePath;
             router.routes[route.target] = route;
         });
         return router;

@@ -17,7 +17,7 @@ module.exports = Annotation.extend({
      *
      * @type {Array}
      */
-    targets: [Annotation.METHOD],
+    targets: [Annotation.CONSTRUCTOR, Annotation.PROPERTY, Annotation.METHOD],
 
     /**
      * Optional initialization method that

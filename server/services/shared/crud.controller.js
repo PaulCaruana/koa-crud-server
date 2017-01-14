@@ -4,7 +4,7 @@
 var controller = function CrudController(dao) {
     return {
         /**
-         * @Route('/')
+         * @Route('')
          */
         findAll: dao.findAll,
         /**

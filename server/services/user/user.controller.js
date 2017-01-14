@@ -1,16 +1,17 @@
 /**
  * @Injectable
- * @Inject(dao="userModel['dao']")
+ * @Inject(dao="userData['dao']")
  * @Router(prefix="/users", nested="CrudController")
  */
 exports = module.exports = (function UserController() {
-    var crudController = require('./crud.controller');
+    var crudController = require('../shared/crud.controller');
     return function UserController(dao) {
         return Object.assign(crudController(dao), {
             /**
              * @Route('/hello')
              */
             hello: function*(next) {
+                console.log("hello...")
                 yield next;
                 this.body = 'Hello';
             }

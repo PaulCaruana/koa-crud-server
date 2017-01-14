@@ -15,9 +15,10 @@ var fs = require('fs');
 var serve = require('koa-static');
 
 
-var application = function (config) {
+var koaApplication = function (config) {
     return {
         create : create,
+        server : app,
         startServer : startServer,
         httpServer: null,
         httpsServer: null,
@@ -52,6 +53,7 @@ var application = function (config) {
         }
 
         this.httpServer.listen(config.port, config.ip, function () {
+            console.log();
             console.log('Http server on ip %s on port %d, in %s mode',
                 config.ip, config.port, config.env);
         });
@@ -66,4 +68,4 @@ var application = function (config) {
 
     function serverShutdown(){}
 };
-exports = module.exports = application;
+exports = module.exports = koaApplication;

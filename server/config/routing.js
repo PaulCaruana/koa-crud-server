@@ -12,6 +12,7 @@ exports = module.exports = function (routers, application) {
             var method = route.method.toLowerCase();
             var property = route.target;
             var matcher = prefix + route.matcher;
+            console.log(route.method + " " + matcher + " --> " +  id + "." + property)
             appRouter[method](matcher, module[property]);
         });
     });

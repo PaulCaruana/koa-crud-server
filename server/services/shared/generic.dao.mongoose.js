@@ -1,6 +1,7 @@
 exports = module.exports = function GenericDao(model) {
     return {
         findAll: function*(next) {
+            console.log("here")
             yield next;
             var error, result;
             try {

@@ -1,9 +1,9 @@
 /**
- * @Injectable("userModel")
+ * @Injectable("userData")
  */
-exports = module.exports = (function UserModel() {
+exports = module.exports = (function UserData() {
     var mongoose = require('mongoose');
-    var genericDao = require("./generic.dao");
+    var genericDao = require("../shared/generic.dao.mongoose");
     var Schema = mongoose.Schema;
     var id = "User";
     var definition = {

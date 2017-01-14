@@ -1,0 +1,16 @@
+{
+    "user" : {
+        "provider": "local",
+        "name": "user1",
+        "active": true,
+        "role": "user",
+        "password": "userpsw"
+    },
+    "admin" : {
+        "provider": "local",
+        "name": "admin1",
+        "active": true,
+        "role": "admin",
+        "password": "adminpsw"
+    }
+}

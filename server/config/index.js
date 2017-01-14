@@ -13,17 +13,19 @@ var common = {
     env: process.env.NODE_ENV || 'dev',
     app : {
         create: function(db) {
-            var koa = require('./koa');
-            this.server.env = config.env;
-            this.server.root = config.root;
-            var app = koa(this.server);
-            return app.create(db);
+            var koaApplication = require('./koaApplication');
+            var app = koaApplication(this.server);
+            return app.create();
         },
         server: {
+            get env() {
+                return config.env
+            },
+            root: root,
             publicDir: '/public',
             ip: '0.0.0.0',
-            port: process.env.PORT || 9000,
-            sslPort: process.env.PORT || 9443
+            port: process.env.PORT || 8000,
+            sslPort: process.env.PORT || 8443
         }
     },
     db : {

@@ -66,6 +66,8 @@ var koaApplication = function (config) {
         return this;
     }
 
-    function serverShutdown(){}
+    function serverShutdown(){
+        console.log("Server shutdown");
+    }
 };
 exports = module.exports = koaApplication;

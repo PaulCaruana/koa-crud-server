@@ -3,28 +3,22 @@
 
 //var should = require('should');
 var config = require('../../config');
-var Application = require('../../application')(config);
-var application = Application.create();
-console.log(application)
-//application.db.start();
+var application = require('../../application').create(config);
+var app2 = application.server;
 
-console.log(application.server)
-var request = require('supertest').agent(application.server);
+var request = require('supertest').agent(application.server.listen());
+//application.startDB();
 
-//var catModel = require('./cat.model');
 
 describe('User', function () {
     describe('GET /:model', function () {
         it('should respond with JSON for all records', function(done) {
-         //   request
-         //       .get('/users/hello')
-            done();
-/*
+            request
+                .get('/users/hello')
                 .expect(200)
                 .expect('Content-Type', /json/)
-                .expect(users)
                 .end(done);
-*/
+
         });
     });
 });

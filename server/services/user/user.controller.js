@@ -13,7 +13,7 @@ exports = module.exports = (function UserController() {
             hello: function*(next) {
                 console.log("hello...")
                 yield next;
-                this.body = 'Hello';
+                this.body = {"test" : "yes"};
             }
         })
     };

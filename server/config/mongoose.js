@@ -33,7 +33,7 @@ var db = function(mongo) {
         });
         
         mongoose.connection.once('open', function connectionOpen() {
-            console.log('Database connection started');
+            console.log('\nDatabase connection started\n');
             // Populate DB with sample data
 /*
             if (mongo.seedDB) {

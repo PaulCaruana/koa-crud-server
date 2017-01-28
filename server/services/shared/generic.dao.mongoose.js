@@ -1,7 +1,6 @@
 exports = module.exports = function GenericDao(model) {
     return {
         findAll: function*(next) {
-            console.log("here")
             yield next;
             var error, result;
             try {
@@ -20,6 +19,7 @@ exports = module.exports = function GenericDao(model) {
                 return this.body = result;
             } catch (_error) {
                 error = _error;
+                this.status = 400;
                 return this.body = error;
             }
         },
@@ -32,6 +32,7 @@ exports = module.exports = function GenericDao(model) {
                 return this.body = result;
             } catch (_error) {
                 error = _error;
+                this.status = 400;
                 return this.body = error;
             }
         },
@@ -44,6 +45,20 @@ exports = module.exports = function GenericDao(model) {
                 return this.body = result;
             } catch (_error) {
                 error = _error;
+                this.status = 400;
+                return this.body = error;
+            }
+        },
+
+        deleteAll: function*(next) {
+            yield next;
+            var error, result;
+            try {
+                result = yield model.remove({}).exec();
+                return this.body = result;
+            } catch (_error) {
+                error = _error;
+                this.status = 400;
                 return this.body = error;
             }
         },
@@ -59,6 +74,7 @@ exports = module.exports = function GenericDao(model) {
                 return this.body = result;
             } catch (_error) {
                 error = _error;
+                this.status = 400;
                 return this.body = error;
             }
         },
@@ -71,6 +87,7 @@ exports = module.exports = function GenericDao(model) {
                 return this.body = result;
             } catch (_error) {
                 error = _error;
+                this.status = 400;
                 return this.body = error;
             }
         },
@@ -79,11 +96,12 @@ exports = module.exports = function GenericDao(model) {
             yield next;
             var error, result;
             try {
-                result = yield model.create(this.request.body).exec();
+                result = yield model.create(this.request.body);
                 this.status = 201;
                 return this.body = result;
             } catch (_error) {
                 error = _error;
+                this.status = 400;
                 return this.body = error;
             }
         }

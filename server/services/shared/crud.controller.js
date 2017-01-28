@@ -12,7 +12,7 @@ var controller = function CrudController(dao) {
          */
         findById: dao.findById,
         /**
-         * @Route('/', method='POST')
+         * @Route('/', method=['PUT','POST'])
          */
         create: dao.create,
         /**
@@ -20,7 +20,7 @@ var controller = function CrudController(dao) {
          */
         replaceById: dao.replaceById,
         /**
-         * @Route('/:id', method='POST')
+         * @Route('/:id', method=['POST','PATCH'])
          */
         updateById: dao.updateById,
         /**

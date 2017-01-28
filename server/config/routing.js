@@ -9,11 +9,14 @@ exports = module.exports = function (routers, application) {
         var module = locator.get(id);
         Object.keys(router.routes).forEach(function (key) {
             var route = router.routes[key];
-            var method = route.method.toLowerCase();
-            var property = route.target;
-            var matcher = prefix + route.matcher;
-            console.log(route.method + " " + matcher + " --> " +  id + "." + property);
-            appRouter[method](matcher, module[property]);
+            var methods = (Array.isArray(route.method))? route.method : [route.method];
+            methods.forEach(function (method) {
+                var method = method.toLowerCase();
+                var property = route.target;
+                var matcher = prefix + route.matcher;
+                console.log(method + " " + matcher + " --> " + id + "." + property);
+                appRouter[method](matcher, module[property]);
+            });
         });
     });
     console.log('\n')

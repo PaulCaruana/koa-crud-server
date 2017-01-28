@@ -28,7 +28,15 @@ module.exports = Annotation.extend({
      */
     init: function(data){
         this.value = (typeof data.value !== 'undefined') ? data.value : '/';
-        this.method = (typeof data.method !== 'undefined')? data.method.toUpperCase() : 'GET';
+        if (typeof data.method !== 'undefined') {
+            if (Array.isArray(data.method)) {
+                this.method.map(function(x){ return x.toUpperCase() })
+            } else {
+                this.method = data.method.toUpperCase();
+            }
+        } else {
+            this.method = 'GET';
+        }
     }
 
 });

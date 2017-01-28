@@ -8,12 +8,10 @@ exports = module.exports = (function UserData() {
     var id = "User";
     var definition = {
         name: {type: String, required: true},
-        info: String,
         active: Boolean,
         role: {type: String, default: 'user', required: true},
-        hashedPassword: String,
-        provider: String,
-        salt: String
+        password: String,
+        provider: String
     };
     var schema = createSchema(definition);
 
@@ -32,5 +30,4 @@ exports = module.exports = (function UserData() {
         var schema = new Schema(definition);
         return schema;
     }
-
 })();

@@ -11,10 +11,11 @@ exports = module.exports = (function() {
             return {
                 startServer: _startServer,
                 serverShutdown: _serverShutdown,
-                startDB: _startDB,
-                dbShutdown: _dbShutdown,
-                server: application.server
-
+                startSimpleServer: _startSimpleServer,
+                db : application.db,
+                locator : application.locator,
+                env : application.env,
+                root : application.root
             }
         }
     };
@@ -28,15 +29,10 @@ exports = module.exports = (function() {
         return application;
     }
 
-    function _startDB() {
+    function _startSimpleServer() {
+        var simpleServer = application.startSimpleServer();
         db.start();
-        return application;
-    }
-
-    function _dbShutdown() {
-        db.shutdown(function() {
-            process.exit(0);
-        });
+        return simpleServer;
     };
 
     function _serverShutdown() {

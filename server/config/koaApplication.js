@@ -17,13 +17,14 @@ var serve = require('koa-static');
 
 var koaApplication = function (config) {
     return {
-        create : create,
-        server : app,
-        startServer : startServer,
+        create: create,
+        server: app,
+        startServer: startServer,
+        startSimpleServer: startSimpleServer,
         httpServer: null,
         httpsServer: null,
         serverShutdown: serverShutdown,
-        router : router
+        router: router
     };
 //---------------------------------
     function create() {
@@ -34,7 +35,7 @@ var koaApplication = function (config) {
         app.use(middlewares.logger());
         app.use(middlewares.staticCache(path.join(config.root, 'public'), {
             buffer: true,
-            maxAge:1
+            maxAge: 1
         }));
         middlewares.csrf(app);
         app.use(router.routes());
@@ -57,14 +58,18 @@ var koaApplication = function (config) {
             console.log('Http server on ip %s on port %d, in %s mode',
                 config.ip, config.port, config.env);
         });
-        if (this.httpsServer){
+        if (this.httpsServer) {
             this.httpsServer.listen(config.sslPort, config.ip, function () {
                 console.log('Https server on ip %s on port %d, in %s mode',
                     config.ip, config.sslPort, config.env);
             });
         }
         return this;
-    }
+    };
+
+    function startSimpleServer() {
+        return app.listen()
+    };
 
     function serverShutdown(){
         console.log("Server shutdown");

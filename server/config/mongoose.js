@@ -31,9 +31,9 @@ var db = function(mongo) {
         mongoose.connection.on('error', function connectionError(err) {
             console.error('Database Error: ', err);
         });
-        
         mongoose.connection.once('open', function connectionOpen() {
-            console.log('\nDatabase connection started\n');
+            console.log('\nDatabase %s connection started on port %d\n',
+                mongo.uri, mongoose.connection.port);
             // Populate DB with sample data
 /*
             if (mongo.seedDB) {

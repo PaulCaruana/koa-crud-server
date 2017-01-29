@@ -11,7 +11,6 @@ exports = module.exports = (function UserController() {
              * @Route('/hello')
              */
             hello: function*(next) {
-                console.log("hello...")
                 yield next;
                 this.body = {"test" : "yes"};
             }

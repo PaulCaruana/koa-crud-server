@@ -5,35 +5,13 @@ var expect = require("chai").expect;
 var config = require('../../config');
 var application = require('../../application').create(config);
 var locator = application.locator;
-var dao = locator.get('userData').dao;
-dao.request = {};
 
 var request = require('supertest').agent(application.startSimpleServer());
+var dao = locator.get('userData').dao;
+dao.request = {};
 var savedSamples = [];
 var updateSample;
-var samples = [
-    {
-        "provider": "local",
-        "name": "user1",
-        "active": true,
-        "role": "user",
-        "password": "userpsw"
-    },
-    {
-        "provider": "local",
-        "name": "user2",
-        "active": true,
-        "role": "user",
-        "password": "otherpsw"
-    },
-    {
-        "provider": "local",
-        "name": "admin1",
-        "active": true,
-        "role": "admin",
-        "password": "adminpsw"
-    }
-];
+var samples = require('./user.samples.js');
 
 function* createSamples() {
     savedSamples = [];

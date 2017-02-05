@@ -12,7 +12,7 @@ exports = module.exports = (function UserController() {
              */
             hello: function*(next) {
                 yield next;
-                this.body = {"test" : "ok"};
+                this.body = {"hello" : "world"};
             }
         })
     };

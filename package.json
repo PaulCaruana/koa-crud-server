@@ -4,6 +4,10 @@
   "version": "0.0.1",
   "repository": "https://github.com/koajs/examples",
   "bugs": "https://github.com/koajs/examples/issues",
+  "license": "MIT",
+  "engines": {
+    "node": ">=5.4.0"
+  },
   "dependencies": {
     "annotation-parser": "^2.7.0",
     "bluebird": "^3.4.7",
@@ -41,14 +45,12 @@
     "eslint-plugin-promise": "^3.3.0",
     "eslint-plugin-standard": "^2.0.1",
     "mocha": "^3.2.0",
+    "nodemon": "^1.11.0",
     "should": "^3.3.2",
     "supertest": "*"
   },
   "scripts": {
-    "test": "make test"
-  },
-  "engines": {
-    "node": ">= 0.11.13"
-  },
-  "license": "MIT"
+    "start": "NODE_ENV=dev ./node_modules/.bin/nodemon --harmony bin/server.js",
+    "test": "mocha -R spec --recursive ./server/**/*spec.js  --require co-mocha"
+  }
 }

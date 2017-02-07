@@ -57,14 +57,14 @@ exports = module.exports = controller;
 ```
 
 #### Depencency Injection
-
+```
 Type: @Injectable
 Purpose: Flags this module to be created and then stores in object repository (application.locator) referenced by id.
 Usage: Once an object is stored in repository it can injected with @inject annotation or alternative can be referenced with application.locator(id).
 Location: Constructor
 Parameters: 
-&nbsp;&nbsp;&nbsp;&nbspid: The name of the injectable, defaults to module function name.
-&nbsp;&nbsp;&nbsp;&nbspsingleton: Determines if object is instantiated or is object. Defaults to false.
+    id: The name of the injectable, defaults to module function name.
+    singleton: Determines if object is instantiated or is object. Defaults to false.
 
 Type: @Inject
 Purpose: Get object from object repository based on specified id and inject object(s) into a module's constructor.
@@ -76,34 +76,34 @@ Config:
 Set what folder(s) and are to scanned for dependency injection. In config/index.js:
 
 wiring: {
-&nbsp;&nbsp;&nbsp;&nbspscan: [...] eg, ["services/**/*.js, another-folder/**/*.js"]
+    scan: [...] eg, ["services/**/*.js, another-folder/**/*.js"]
 }   
-
+```
 #### Routing
-
+```
 Type: @Router 
 Purpose: Flagged and scan module for routable functions
 Usage: Use in conjunction with @Route annotation to assign route to functions
 Location: Constructor
 Parameters: 
-    &nbsp;&nbsp;&nbsp;&nbspprefix: API endpoint prefix eg. '/users' - Optional
-    &nbsp;&nbsp;&nbsp;&nbspnested: Scan inherited or aggregated as child module - Optional
+    prefix: API endpoint prefix eg. '/users' - Optional
+    nested: Scan inherited or aggregated as child module - Optional
     
 Type: @Route
 Purpose: Add assigned route and optionally REST method(s) to function
 Usage: State what API endpoint is assigned to a function
 Location: Function
 Parameters:
-    &nbsp;&nbsp;&nbsp;&nbspimplicit path eg '/:id' where API path would be prefix/:id eg. /users/1234
-   &nbsp;&nbsp;&nbsp;&nbsp method: REST eg 'GET', 'PUT', 'POST', 'DELETE' or 'PATCH'. Can be one or many eg METHOD='GET' or METHOD=['GET', 'POST'] - Defaults to GET
+    implicit path eg '/:id' where API path would be prefix/:id eg. /users/1234
+    method: REST eg 'GET', 'PUT', 'POST', 'DELETE' or 'PATCH'. Can be one or many eg METHOD='GET' or METHOD=['GET', 'POST'] - Defaults to GET
 
 Config:
 Set what folder(s) and are to scanned for dependency injection. In config/index.js:
 
 routing: {
-   &nbsp;&nbsp;&nbsp;&nbspscan: [...] eg, ["services/**/*.js, another-folder/**/*.js"]
+    scan: [...] eg, ["services/**/*.js, another-folder/**/*.js"]
 }
-
+```
 ### Prerequisite
 
 * [NodeJS](http://nodejs.org/download/) > 4.0.0
